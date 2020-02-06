@@ -8,10 +8,15 @@ class MysqlDataSource:
         self.config = {
             'user': environ['MYSQL_USER'],
             'password': environ['MYSQL_PASSWORD'],
-            'host': environ['MYSQL_HOST'],
             'database': environ['MYSQL_DATABASE'],
             'raise_on_warnings': (environ['MYSQL_RAISE_ON_WARNINGS'] == 'True')
         }
+
+        if 'MYSQL_HOST' in environ:
+            self.config['host'] = environ['MYSQL_HOST']
+        else:
+            self.config['unix_socket'] = environ['MYSQL_SOCKET_PATH']
+            
         self._connection = None
         self._cursor = None
 

@@ -5,19 +5,30 @@ from entities.people_page_entity import PeoplePageEntity
 from entities.response_entity import ResponseEntity
 from facades.pagination_facade import paginationFacade
 
+import traceback
+
+from responses import responses
+
 
 def listPeople(offset, limit):
 
-    if (not paginationFacade.offsetLimitValidation(offset, limit)):
-        raise Exception
-    
-    peopleDB = peopleRepository.listPeople(offset,limit)
-    metadata = MetadataEntity(limit, offset, peopleDB['total'])
-    peopleList = list()
-    
-    for tupla in peopleDB['data']:
-        peopleList.append(PeopleEntity(tupla[0], tupla[1], tupla[2]))
+    try:
+        pagDic = paginationFacade.offsetLimitValidation(offset, limit)
+        if (not pagDic):
+            raise responses.WrongRequest
+        
+        peopleDB = peopleRepository.listPeople(**pagDic)
+        metadata = MetadataEntity(limit, offset, peopleDB['total'])
+        peopleList = list()
 
-    return ResponseEntity(200, PeoplePageEntity(metadata, peopleList))
+        for tupla in peopleDB['data']:
+            peopleList.append(PeopleEntity(tupla[0], tupla[1], tupla[2]))
 
+        return ResponseEntity(200, PeoplePageEntity(metadata, peopleList))
+    
+    except responses.WrongRequest:
+        return ResponseEntity(responses.http_responses['WrongRequest']['code'], responses.http_responses['WrongRequest']['message'])
+    except Exception:
+        print(traceback.format_exc())
+        return ResponseEntity(responses.http_responses['UnexpectedError']['code'], responses.http_responses['UnexpectedError']['message'])
     

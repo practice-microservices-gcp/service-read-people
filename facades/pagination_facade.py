@@ -1,9 +1,14 @@
-
+import re
 
 class PaginationFacade():
 
     def offsetLimitValidation(self, offset, limit):
-        return isinstance(offset, int) and isinstance(limit, int)
+        numberPatter = re.compile(r"^([\s\d]+)$")
+
+        if (numberPatter.match(offset) and numberPatter.match(limit)):
+            return { "offset": int(offset), "limit": int(limit) }
+        else:
+            return False
 
 
 

@@ -22,27 +22,37 @@ class PeoplePageEntity():
                 typeItem = str(type(dic[keys[index]]))
 
                 if classPattern.match(typeItem):
-                    tupla = "\"{key}\":\"{value}\"".format(key=keys[index], value=dic[keys[index]].to_json())
+                    tupla = "\"{key}\":{value}".format(key=keys[index], value=dic[keys[index]].to_json())
                 elif listPatter.match(typeItem):
-                    tupla = "\"{key}\":\"{value}\"".format(key=keys[index], value=self._json_list(dic[keys[index]]))
+                    tupla = "\"{key}\":{value}".format(key=keys[index], value=self._json_list(dic[keys[index]]))
+                else:
+                    tupla = "\"{key}\":{value}".format(key=keys[index], value=dic[keys[index]])
 
                 if index != (leng - 1):
                     jsonStr += tupla + ","
                 else:
                     jsonStr += tupla
+            
+            jsonStr = "{" + jsonStr + "}"
         elif listPatter.match(typeObj):
             jsonStr = self._json_list(obj)
         else:
-            jsonStr = str(obj)
+            jsonStr = "\"" + str(obj) + "\""
 
         return jsonStr
 
     def _json_list (self, elements):
         jsonStr = ""
         leng = len(elements)
+        classPattern = re.compile("^<class 'entities.*")
 
         for index in range(leng):
-            tupla = self._element_to_json(elements[index])
+            typeItem = str(type(elements[index]))
+
+            if classPattern.match(typeItem):
+                tupla = elements[index].to_json()
+            else:
+                tupla = self._element_to_json(elements[index])
 
             if index != (leng - 1):
                 jsonStr += tupla + ","
@@ -60,9 +70,9 @@ class PeoplePageEntity():
         jsonStr = ""
 
         for index in range(leng):
-            tupla = "\"{key}\":\"{value}\"".format(key=keys[index], value=self._element_to_json(getattr(self,keys[index])))
+            tupla = "\"{key}\":{value}".format(key=keys[index], value=self._element_to_json(getattr(self,keys[index])))
 
-            if leng != (leng - 1):
+            if index != (leng - 1):
                 jsonStr += tupla + ","
             else:
                 jsonStr += tupla

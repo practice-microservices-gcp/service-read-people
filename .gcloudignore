@@ -1,0 +1,10 @@
+.vscode
+dev-data
+venv
+.git
+.gitignore
+docker-compose.yml
+local_run.py
+nohup.out
+test_app.sh
+deploy_function.sh

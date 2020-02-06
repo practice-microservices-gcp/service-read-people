@@ -27,6 +27,8 @@ class ResponseEntity():
                     tupla = "\"{key}\":{value}".format(key=keys[index], value=dic[keys[index]].to_json())
                 elif listPatter.match(typeItem):
                     tupla = "\"{key}\":{value}".format(key=keys[index], value=self._json_list(dic[keys[index]]))
+                else:
+                    tupla = "\"{key}\":{value}".format(key=keys[index], value=dic[keys[index]])
 
                 if index != (leng - 1):
                     jsonStr += tupla + ","
