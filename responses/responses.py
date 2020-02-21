@@ -1,11 +1,11 @@
 http_responses = {
     'WrongRequest': {
         'message': 'Wrong offset and limit parameters',
-        'code': '400'
+        'code': '400 '
     },
     'UnexpectedError': {
         'message': 'There is a problem with the data base. Please try later',
-        'code': '500'
+        'code': '500 '
     }
 }
 
