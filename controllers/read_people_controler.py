@@ -1,4 +1,3 @@
-from repositories.people_repository import peopleRepository
 from entities.metadata_entity import MetadataEntity
 from entities.people_entity import PeopleEntity
 from entities.people_page_entity import PeoplePageEntity
@@ -8,6 +7,7 @@ from facades.pagination_facade import paginationFacade
 import traceback
 
 from responses import responses
+from people_repository.people_repository import peopleRepository
 
 
 def listPeople(offset, limit):
