@@ -1,9 +1,9 @@
 astroid==2.3.3
 autopep8==1.5
 Click==7.0
-git+https://github.com/practice-microservices-gcp/lib-entity.git@step-0
-git+https://github.com/practice-microservices-gcp/lib-response.git@step-0
-git+https://github.com/practice-microservices-gcp/lib-repository.git@step-0
+git+https://github.com/practice-microservices-gcp/lib-entity.git@master
+git+https://github.com/practice-microservices-gcp/lib-response.git@master
+git+https://github.com/practice-microservices-gcp/lib-repository.git@master
 Flask==1.0.2
 isort==4.3.21
 itsdangerous==1.1.0

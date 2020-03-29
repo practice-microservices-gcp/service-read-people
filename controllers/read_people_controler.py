@@ -22,7 +22,7 @@ def listPeople(offset, limit):
         peopleList = list()
 
         for tupla in peopleDB['data']:
-            peopleList.append(PeopleEntity(tupla[0], tupla[1], tupla[2]))
+            peopleList.append(PeopleEntity(tupla[0], tupla[1], tupla[2], tupla[3]))
 
         return ResponseEntity(200, PeoplePageEntity(metadata, peopleList))
     
